@@ -10,7 +10,6 @@ namespace API.Data
         {
         }
 
-        public virtual DbSet<Value> Values { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }
