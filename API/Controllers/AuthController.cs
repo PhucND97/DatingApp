@@ -12,11 +12,11 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace API.Controllers
 {
-    public class UsersController : BaseApiController
+    public class AuthController : BaseApiController
     {
         private readonly IAuthRepository _authRepo;
         private readonly IConfiguration _config;
-        public UsersController(IAuthRepository authRepo, IConfiguration config)
+        public AuthController(IAuthRepository authRepo, IConfiguration config)
         {
             _config = config;
             _authRepo = authRepo;
