@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Interfaces;
@@ -55,6 +56,26 @@ namespace API.Controllers
         public async Task<ActionResult> AddUser()
         {
             throw new NotImplementedException();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
+        {   
+            if(id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var userFromRepo = await _userRepo.GetUser(id);
+
+            _mapper.Map<UserForUpdateDto, User>(userForUpdateDto, userFromRepo);
+
+            if(await _userRepo.SaveChanges())
+            {
+                return NoContent();
+            } 
+
+            throw new Exception($"Updating user {id} failed on save");
         }
     }
 }
